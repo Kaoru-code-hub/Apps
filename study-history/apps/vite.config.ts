@@ -20,5 +20,5 @@ export default defineConfig({
       usePolling: true,
     },
   },
-  base: '/Apps/study-history/',
+  base: '/Apps/',
 });
