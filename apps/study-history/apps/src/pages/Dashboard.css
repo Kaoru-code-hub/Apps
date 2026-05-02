@@ -1,0 +1,176 @@
+.dash {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.dash__title {
+  margin: 0;
+  font-size: var(--text-xl);
+  font-weight: 600;
+}
+
+.dash__tabs {
+  display: inline-flex;
+  background-color: var(--color-surface-alt);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  align-self: flex-start;
+}
+
+.dash__tab {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+.dash__tab--on {
+  background-color: var(--color-bg);
+  color: var(--color-accent-500);
+  font-weight: 600;
+}
+
+.dash__label {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.dash__total {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-2xl);
+  font-weight: 700;
+}
+
+.dash__heading {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.dash__chart {
+  height: 240px;
+  width: 100%;
+}
+
+.dash__chart--donut { height: 280px; }
+
+.dash__muted { color: var(--color-text-muted); margin: 0; }
+
+.dash__error {
+  color: var(--color-danger);
+  font-size: var(--text-sm);
+  background-color: rgba(162, 59, 59, 0.08);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+}
+
+.dash__goals {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.dash__goal-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.dash__goal-header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.dash__goal-label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.dash__goal-values {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-sm);
+  flex: 1;
+}
+
+.dash__goal-pct {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-accent-500);
+  flex-shrink: 0;
+}
+.dash__goal-pct[data-done='true'] {
+  color: #22c55e;
+}
+
+/* 猫トラック：猫 + バーを重ねるコンテナ */
+.dash__cat-track {
+  position: relative;
+  padding-top: 44px; /* 猫の高さ分の余白 */
+}
+
+/* 猫の位置を --cat-pos (0〜1) で制御 */
+.dash__cat-wrap {
+  position: absolute;
+  bottom: 8px; /* バーの上に乗せる */
+  /* 猫画像幅48px。右端でははみ出さないよう calc で調整 */
+  left: clamp(0px, calc(var(--cat-pos, 0) * (100% - 48px)), calc(100% - 48px));
+  width: 48px;
+  height: 40px;
+  transition: left 0.6s ease;
+}
+
+/* 2枚を重ねてコマ送りアニメ */
+.dash__cat-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.dash__cat-img--f2 {
+  animation: cat-walk-frame 0.4s steps(1) infinite;
+}
+
+@keyframes cat-walk-frame {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* cat_1 も同じリズムで逆に */
+.dash__cat-img:not(.dash__cat-img--f2) {
+  animation: cat-walk-frame-base 0.4s steps(1) infinite;
+}
+
+@keyframes cat-walk-frame-base {
+  0%, 49% { opacity: 0; }
+  50%, 100% { opacity: 1; }
+}
+
+.dash__progress-track {
+  height: 8px;
+  background-color: var(--color-surface-alt);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.dash__progress-fill {
+  height: 100%;
+  background-color: var(--color-accent-500);
+  border-radius: 999px;
+  transition: width 0.6s ease;
+  max-width: 100%;
+}
+.dash__progress-fill[data-done='true'] {
+  background-color: #22c55e;
+}

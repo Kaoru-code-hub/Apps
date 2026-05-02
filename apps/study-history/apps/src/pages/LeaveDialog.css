@@ -1,0 +1,44 @@
+.leave {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.leave__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(14, 14, 17, 0.5);
+}
+
+.leave__body {
+  position: relative;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-6);
+  max-width: 420px;
+  width: 100%;
+}
+
+.leave__title {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-warning);
+}
+
+.leave__msg {
+  margin: 0 0 var(--space-5);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.leave__actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+}
