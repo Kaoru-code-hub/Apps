@@ -20,5 +20,5 @@ export default defineConfig({
       usePolling: true,
     },
   },
-  base: '/Omni-Repo/study-history/',
+  base: '/Apps/study-history/',
 });
