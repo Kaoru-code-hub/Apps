@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'Apps/study-history/apps/**'
+      - 'study-history/apps/**'
   workflow_dispatch:
 
 permissions:
@@ -25,21 +25,21 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
-          cache-dependency-path: Apps/study-history/apps/package-lock.json
+          cache-dependency-path: study-history/apps/package-lock.json
 
       - name: Install dependencies
-        working-directory: Apps/study-history/apps
+        working-directory: study-history/apps
         run: npm ci
 
       - name: Build
-        working-directory: Apps/study-history/apps
+        working-directory: study-history/apps
         run: npm run build
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: Apps/study-history/apps/dist
+          path: study-history/apps/dist
 
   deploy:
     needs: build
