@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { defineConfig } from 'vite';
@@ -21,4 +22,9 @@ export default defineConfig({
     },
   },
   base: '/Apps/',
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./src/test/setup.ts'],
+  },
 });
