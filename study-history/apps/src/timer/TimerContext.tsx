@@ -39,10 +39,34 @@ interface TimerContextValue {
 
 const Ctx = createContext<TimerContextValue | null>(null);
 
+const STORAGE_KEY = 'timer_session';
+
+function saveSession(s: TimerSession | null) {
+  if (s) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+  } else {
+    localStorage.removeItem(STORAGE_KEY);
+  }
+}
+
+function loadSession(): TimerSession | null {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw) as TimerSession;
+  } catch {
+    return null;
+  }
+}
+
 export function TimerProvider({ children }: { children: ReactNode }) {
-  const [session, setSession] = useState<TimerSession | null>(null);
+  const [session, setSession] = useState<TimerSession | null>(() => loadSession());
   const [now, setNow] = useState(() => Date.now());
   const intervalRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    saveSession(session);
+  }, [session]);
 
   useEffect(() => {
     if (session && intervalRef.current == null) {
@@ -58,6 +82,18 @@ export function TimerProvider({ children }: { children: ReactNode }) {
         intervalRef.current = null;
       }
     };
+  }, [session]);
+
+  // バックグラウンドから復帰したときに now を即時更新する
+  useEffect(() => {
+    if (!session) return;
+    const handler = () => {
+      if (document.visibilityState === 'visible') {
+        setNow(Date.now());
+      }
+    };
+    document.addEventListener('visibilitychange', handler);
+    return () => document.removeEventListener('visibilitychange', handler);
   }, [session]);
 
   // 計測中の離脱警告
